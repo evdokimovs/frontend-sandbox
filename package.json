@@ -6,7 +6,9 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "test:unit": "vue-cli-service test:unit",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "fmt": "prettier --write '{src,test}/**/*.ts'",
+    "fmt:check": "prettier --check '{src,test}/**/*.ts'"
   },
   "dependencies": {
     "core-js": "^3.6.5",
