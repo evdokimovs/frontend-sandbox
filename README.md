@@ -3,7 +3,7 @@ Flutter sandbox
 
 Using [Jason] library and [Medea] WebRTC media server create an application for audio/video calls between two users.
 
-[Design](https://www.figma.com/file/E9BZb5DuoTpHgTjriqMwip/Flutter-Sandbox)
+[Design](https://www.figma.com/file/3x98kN1De6US3ek9a9WJof/Frontend-Sandbox)
 | [Prototype](https://www.figma.com/proto/3x98kN1De6US3ek9a9WJof/Frontend-Sandbox)
 
 > This is a [GitHub template][9] repository, so you need to click on `Use this template` button above and do all the development in your own repository which uses this one as template only.
@@ -37,6 +37,12 @@ For [signaling][1] between client you should use [Medea] media server with a [Ja
 
 Read [Control API RFC][18] and [Client API RFC][19] for better understanding of how it works. You don't need to use [Control API][18] directly, instead you can use [Control API mock server][20] which provides simple REST API interface.
 
+
+### Running instance of [Medea] media server
+
+Already running instance of [Medea] media server can be accessed at `wss://example.com`. Control API mock server accessible at `https://example.com/control-api`.
+
+
 ### Useful links
 
 - [Medea source code][Medea]
@@ -61,7 +67,7 @@ Now your application will be built and published to the [GitHub Pages] automatic
 
 Firstly, you should demonstrate that application can make calls between users and disabling/enabling audio/video works correctly.
 
-At the end, your application should be able to make video call with a reviewer.
+At the end, your application (published to [GitHub Pages]) should be able to make video call with a reviewer.
 
 
 
