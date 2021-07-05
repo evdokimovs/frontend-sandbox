@@ -1,4 +1,4 @@
-FROM instrumentisto/medea:dev as base
+FROM evdokimovs/foobar-test:dev as base
 
 FROM ubuntu as runtime
 
