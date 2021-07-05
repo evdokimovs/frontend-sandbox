@@ -1,0 +1,8 @@
+[control]
+static_specs_dir = "/specs"
+
+[turn]
+is_static = true
+
+[[turn.static.stun]]
+address = "stun.l.google.com:19302"
