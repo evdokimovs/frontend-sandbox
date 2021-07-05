@@ -35,12 +35,58 @@ Using [Jason] library and [Medea] WebRTC media server create an application for 
 
 For [signaling][1] between client you should use [Medea] media server with a [Jason] library.
 
-Read [Control API RFC][18] and [Client API RFC][19] for better understanding of how it works. You don't need to use [Control API][18] directly, instead you can use [Control API mock server][20] which provides simple REST API interface.
+Read [Control API RFC][18] and [Client API RFC][19] for better understanding of how it works. You don't need to use [Control API][18] directly, instead you can use following static Control API spec:
+
+```yaml
+kind: Room
+id: call
+spec:
+  pipeline:
+    Alice:
+      kind: Member
+      credentials:
+        plain: helloworld
+      spec:
+        pipeline:
+          publish:
+            kind: WebRtcPublishEndpoint
+            spec:
+              p2p: Always
+          play-responder:
+            kind: WebRtcPlayEndpoint
+            spec:
+              src: "local://call/Bob/publish"
+    Bob:
+      kind: Member
+      credentials:
+        plain: helloworld
+      spec:
+        pipeline:
+          publish:
+            kind: WebRtcPublishEndpoint
+            spec:
+              p2p: Always
+          play-caller:
+            kind: WebRtcPlayEndpoint
+            spec:
+              src: "local://call/Alice/publish"
+```
+
+This spec will be automatically created on your [Medea] instance deployed on [Heroku].
 
 
-### Running instance of [Medea] media server
+### Deploying on [Heroku]
 
-Already running instance of [Medea] media server can be accessed at `wss://example.com`. Control API mock server accessible at `https://example.com/control-api`.
+1. Create account on [Heroku] (if you don't have one).
+2. Copy [Heroku] API key from the [account page][22].
+3. Go to [Actions Secrets][23] settings in your GitHub repository.
+4. Add the following repository keys:
+    - `HEROKU_API_KEY` - API key which you copied at step 2;
+    - `HEROKU_EMAIL` - email with which you registered on [Heroku].
+5. Go to ['Deploy Medea media server to Heroku'][24] GitHub workflow.
+6. Run workflow on `master` branch.
+
+Now your instance of a [Medea] media server can be accessed at `wss://frontend-sandbox-{{ YOUR GITHUB USERNAME }}.herokuapp.com/ws`.
 
 
 ### Useful links
@@ -819,6 +865,9 @@ Make sure that your IDE supports `.editorconfig` rules applying. For JetBrains I
 [19]: https://github.com/instrumentisto/medea/blob/master/docs/rfc/0002-webrtc-client-api.md
 [20]: https://github.com/instrumentisto/medea/tree/master/mock/control-api
 [21]: /../../settings/pages
+[22]: https://dashboard.heroku.com/account
+[23]: /../../settings/secrets/actions
+[24]: /../../actions/workflows/deploy-medea.yml
 
 
 [dartdoc]: https://dart.dev/tools/dartdoc
@@ -834,3 +883,4 @@ Make sure that your IDE supports `.editorconfig` rules applying. For JetBrains I
 [Jason]: https://github.com/instrumentisto/medea/tree/master/jason
 [GitHub Pages]: https://pages.github.com/
 [JSDoc]: https://jsdoc.app/
+[Heroku]: https://www.heroku.com
