@@ -1,6 +1,6 @@
-FROM evdokimovs/foobar-test:dev as base
+FROM instrumentisto/medea:edge as base
 
-FROM ubuntu as runtime
+FROM debian:bullseye-slim as runtime
 
 COPY --from=base /medea /
 
