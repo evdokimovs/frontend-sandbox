@@ -1,4 +1,4 @@
-Flutter sandbox
+Frontend sandbox
 ===============
 
 Using [Jason] library and [Medea] WebRTC media server create an application for audio/video calls between two users.
