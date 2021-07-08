@@ -24,7 +24,7 @@ Using [Jason] library and [Medea] WebRTC media server create an application for 
 
 ## Implementation requirements
 
-1. Code should be documented with [JSDoc].
+1. Code should be documented with [TypeDoc] and is able to generate documentation in a form of static website (you may deploy it on [GitHub Pages] as well).
 2. Code should be covered with unit tests.
 3. [E2E (end-to-end) tests][3] should cover all the required features.
 
@@ -35,7 +35,7 @@ Using [Jason] library and [Medea] WebRTC media server create an application for 
 
 For [signaling][1] between client you should use [Medea] media server with a [Jason] library.
 
-Read [Control API RFC][18] and [Client API RFC][19] for better understanding of how it works. You don't need to use [Control API][18] directly, instead you can use following static Control API spec:
+Read [Control API RFC][18] and [Client API RFC][19] for better understanding of how it works. You don't need to use [Control API][18] directly, instead you may use the following static spec:
 
 ```yaml
 kind: Room
@@ -72,7 +72,7 @@ spec:
               src: "local://call/Alice/publish"
 ```
 
-This spec will be automatically created on your [Medea] instance deployed on [Heroku].
+This spec is created automatically for your [Medea] instance deployed on [Heroku].
 
 
 ### Deploying on [Heroku]
@@ -94,6 +94,7 @@ Now your instance of a [Medea] media server can be accessed at `wss://frontend-s
 - [Medea source code][Medea]
 - [Jason source code][Jason]
 - [Jason documentation](https://docs.rs/medea-jason)
+- [Jason usage example](https://github.com/instrumentisto/medea/blob/master/jason/demo/index.html)
 - [Medea Control API mock server endpoints documentation and source code](https://github.com/instrumentisto/medea/tree/master/mock/control-api)
 
 
@@ -424,412 +425,7 @@ There are several label groups:
 
 ## Code style
 
-## JavaScript
-
-All JavaScript source code must follow [Google JavaScript Style Guide][5].
-
-Any rules described here are in priority if they have conflicts with
-Google JavaScript Style Guide.
-
-
-### jQuery
-
-__Name of variable__ that is __assigned to `jQuery`__ object (`$`)
-__must start with `$` symbol__.
-```js
-// WRONG
-var elem = $('#header');
-
-// CORRECT
-var $elem = $('#header');
-```
-
-
-### Methods chain
-
-When wrapping methods chain the __`.` (invocation operator) must be placed
-before method__ it invokes (unlike other operators).
-```js
-// WRONG
-very().
-    big().
-    method().
-    chain();
-
-// CORRECT
-very()
-    .big()
-    .method()
-    .chain();
-```
-
-__Long methods chain__ must be __split to indented logical blocks__.  
-For example, it's good to split method chain into logical blocks basing on
-queried elements and performed operations.
-```js
-// WRONG
-$('.sidebar .menu')
-    .find('a')
-    .removeClass('active')
-    .filter('[href="' + pageAlias + '"]')
-    .addClass('active');
-
-// CORRECT
-$('.sidebar .menu')
-    .find('a')
-        .removeClass('active')
-    .filter('[href="' + pageAlias + '"]')
-        .addClass('active');
-```
-
-
-### `var` block
-
-__Each new variable__ must be __aligned to the first variable__ of `var` block,
-but not indented.
-```js
-// WRONG
-var $elem = $('#header'),
-  isActive = $elem.hasClass('active'),
-  num = 0;
-
-// CORRECT
-var $elem = $('#header'),
-    isActive = $elem.hasClass('active'),
-    num = 0;
-```
-
-If __expression is too long__ and must be wrapped, then its __wrapped lines
-must be aligned__ (with their indents) to __position where expression starts__.
-```js
-// WRONG
-var sum = 23 + 24 + 25 +
-    26 + 27 + 28,
-    ternary = some ?
-    yes :
-    no,
-    isActive = $elem.find('.some')
-    .hasClass('active'),
-    num = veryLongFunctionNameWithResult(
-    some, arguments, here);
-
-// CORRECT
-var sum = 23 + 24 + 25 +
-          26 + 27 + 28,
-    ternary = some ?
-              yes :
-              no,   
-    isActive = $elem.find('.some')
-                   .hasClass('active'),
-    num = veryLongFunctionNameWithResult(
-              some, arguments, here),
-    prefferable = veryLongFunctionNameWithResult(some,
-                                                 arguments, here);
-```
-
-The __exception is functions, arrays or object definition__. In this case
-__alignment must be set to position of the first `var` block variable__.
-```js
-// WRONG
-var myObject = {
-                 my: 'property',
-                 your: 'responsibility',
-               },
-    myArray = [
-                'some',
-                'values',
-                'here'
-              ],
-    myFunc = function() {
-               console.log('Hello darkness, my old friend, ' +
-                           'I\'ve come to talk with you again.');
-             };
-
-// WRONG
-var myObject = {
-  my: 'property',
-  your: 'responsibility',
-},
-    myArray = [
-  'some',
-  'values',
-  'here'
-],
-    myFunc = function() {
-  console.log('Hello darkness, my old friend, ' +
-              'I\'ve come to talk with you again.');
-};
-
-// CORRECT
-var myObject = {
-      my: 'property',
-      your: 'responsibility',
-    },
-    myArray = [
-      'some',
-      'values',
-      'here'
-    ],
-    myFunc = function() {
-      console.log('Hello darkness, my old friend, ' +
-                  'I\'ve come to talk with you again.');
-    };
-```
-
-
-### JSDoc
-
-__JSDoc parameters and types__ must be described __in [common JSDoc
-manner][6]__ despite the fact that [Google JavaScript Style Guide provides
-its own format][10]. This is required because common IDEs and static analysis
-tools do not play well with Google JavaScript Style Guide JSDoc declarations.
-
-
-
-
-## Vue.js
-
-All Vue components must follow [Vue.js Component Style Guide][14].
-
-The guide is available on several languages, but __English is preferred__,
-because it's always up-to-date the most.
-
-Vue __components__ must be __separated into at least two `.vue` and `.ts`
-files__ to support TypeScript linting and IDE integration
-normally.
-
-
-
-
-## TypeScript
-
-All TypeScript source code must follow [TypeScript coding guidelines][15].
-An official [handbook][16] is also a good starting point to read before
-migrating from JavaScript to TypeScript.
-
-Any __rules described here are in priority__ if they have conflicts with
-TypeScript coding guidelines.
-
-All TypeScript __sources__, __tests__ and __types__ must be __linted__ without
-any warnings by [TSLint][17] (which defines rules described here along with recommended TSLint rules).
-
-
-### String and Quotes
-
-Using raw strings (__single-quoted__) __is preferable over double-quoted__
-strings. Double-quoted strings can be used, when it's necessary to quote
-something in a string, that is already single-quoted, or in a documentation, for
-example.
-```typescript
-// CORRECT
-import 'Vue' from 'vue';
-
-/**
- * Test class, that has "message" property.
- */
-export default class Test {
-    private message: string = 'Hello world!';
-}
-
-
-// WRONG
-import "Vue" from "vue";
-
-/**
- * Test class, that has 'message' property
- */
-export default class Test {
-    private message: string = "Hello world!";
-}
-```
-
-
-### Trailing comma
-
-__Trailing comma is mandatory in multi-line declarations__
-(array/object literals, destructuring assignments, function typings,
-named imports/exports and function parameters)
-and __forbidden in single-line__ declarations.
-```typescript
-// CORRECT
-const store = new Store({
-    actions,
-    getters,
-});
-const multiLineArray = [
-    1,
-    2,
-    3,
-];
-const singleLineArray = [1,2,3];
-
-// WRONG
-const store = new Store({
-    actions,
-    getters
-});
-const multiLineArray = [
-    1,
-    2,
-    3
-];
-```
-
-
-### `import` statement
-
-All `import` statements must be __divided into the following ordered
-sections__:
-1. imports of third-party libraries modules;
-2. imports of application itself modules;
-3. imports of components (for UI applications);
-4. imports of application itself test modules (required for specs/tests).
-
-A __blank line__ is mandatory __between these sections__.
-All import sections __must be separated__ from the rest of code by __2 blank
-lines__.
-
-__Inside__ each section imports must be __sorted in alphabetical__ order
-__by__ their __path__ (not imported name).
-
-```typescript
-// CORRECT
-import Vue from 'vue';
-import Component from 'vue-class-component';
-import { Store } from 'vuex';
-
-import HMRApi from 'HMRApi';
-import RootState from 'store/root/state';
-
-import BottomMenu from 'components/bottom-menu/BottomMenu.vue';
-import MenuSidebar from 'components/menu-sidebar/MenuSidebar.vue';
-import TopMenu from 'components/top-menu/TopMenu.vue';
-import QuickAccessSidebar from 'components/quick-access-sidebar/QuickAccessSidebar.vue';
-
-import Helper from 'unit/Helper';
-
-
-class App {}
-
-
-// WRONG
-import HMRApi from 'HMRApi';
-import RootState from 'store/root/state';
-import Vue from 'vue';
-import Component from 'vue-class-component';
-import { Store } from 'vuex';
-import Helper from 'unit/Helper';
-import BottomMenu from 'components/bottom-menu/BottomMenu.vue';
-import MenuSidebar from 'components/menu-sidebar/MenuSidebar.vue';
-import TopMenu from 'components/top-menu/TopMenu.vue';
-import QuickAccessSidebar from 'components/quick-access-sidebar/QuickAccessSidebar.vue';
-
-class App {}
-```
-
-`import` statement __must not be wrapped__, even if it overlaps max allowed
-line length.  
-__Each import__ must take exactly __one line__.
-
-To disable TSLint warning about max line length, you can use
-`// tslint:disable-line` comment at the end of the line.
-```typescript
-// CORRECT
-import QuickAccessSidebar from 'components/quick-access-sidebar/QuickAccessSidebar.vue'; // tslint:disable-line
-
-// WRONG
-import QuickAccessSidebar from
-    'components/quick-access-sidebar/QuickAccessSidebar.vue';
-```
-
-
-### Multiline methods arguments
-
-When it comes to formatting multiline method arguments, the following rules
-must be met:
-- __each argument__ takes its __own line__ and is __indented__;
-- the __closing parenthesis and__ the __opening brace__ take their __own line__.
-
-```typescript
-// CORRECT
-private beforeEach(
-    to: Route,
-    from: Route,
-    next: (to?: RawLocation | false | ((vm: Vue) => any) | void) => void,
-) {
-    store.dispatch(START_LOADING);
-    next();
-}
-
-// WRONG
-private beforeEach(to: Route, from: Route,
-    next: (to?: RawLocation | false | ((vm: Vue) => any) | void) => void) {
-    store.dispatch(START_LOADING);
-    next();
-}
-```
-
-
-### Specs
-
-__Top-level sections__ (usually `describe`) in the specs (unit or e2e) must be
-__separated by 2 blank lines__ between each other.
-
-Lower-level sections (usually `it` statements) must be __separated by
-1 blank line__.
-
-```typescript
-// CORRECT
-describe('components/app/App.vue', () => {
-
-
-    let app: Vue;
-    let component: AppType;
-
-    before(() => {
-        return Helper.initApp(App).then((vm: Vue) => {
-            app = vm;
-            component = app.$children[0] as any;
-        });
-    });
-
-
-    describe('preFetch()', () => {
-
-        it('returns Promise', () => {
-            expect(component.preFetch(component.$store))
-                .to.be.a('Promise');
-        });
-
-    });
-
-
-});
-
-
-// WRONG
-describe('components/app/App.vue', () => {
-
-    let app: Vue;
-    let component: AppType;
-
-    before(() => {
-        return Helper.initApp(App).then((vm: Vue) => {
-            app = vm;
-            component = app.$children[0] as any;
-        });
-    });
-
-    describe('preFetch()', () => {
-        it('returns Promise', () => {
-            expect(component.preFetch(component.$store))
-                .to.be.a('Promise');
-        });
-    });
-
-});
-```
-
+All TypeScript source code must follow [TypeScript coding guidelines][15]. For code formatting [Prettier] must be used (and verified on CI).
 
 
 ### `.editorconfig` rules
@@ -857,10 +453,7 @@ Make sure that your IDE supports `.editorconfig` rules applying. For JetBrains I
 [11]: https://docs.github.com/en/github/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-pull-requests#draft-pull-requests
 [12]: https://docs.github.com/en/communities/using-templates-to-encourage-useful-issues-and-pull-requests/about-issue-and-pull-request-templates#pull-request-templates
 [13]: https://docs.github.com/en/github/collaborating-with-pull-requests/incorporating-changes-from-a-pull-request/about-pull-request-merges#squash-and-merge-your-pull-request-commits
-[14]: https://pablohpsilva.github.io/vuejs-component-style-guide
 [15]: https://github.com/Microsoft/TypeScript/wiki/Coding-guidelines
-[16]: http://www.typescriptlang.org/docs/handbook/basic-types.html
-[17]: https://palantir.github.io/tslint
 [18]: https://github.com/instrumentisto/medea/blob/master/docs/rfc/0001-control-api.md
 [19]: https://github.com/instrumentisto/medea/blob/master/docs/rfc/0002-webrtc-client-api.md
 [20]: https://github.com/instrumentisto/medea/tree/master/mock/control-api
@@ -877,10 +470,10 @@ Make sure that your IDE supports `.editorconfig` rules applying. For JetBrains I
 [flutter_webrtc]: https://pub.dev/packages/flutter_webrtc
 [Git]: https://git-scm.com
 [Git-ignored]: https://git-scm.com/docs/gitignore
+[GitHub Pages]: https://pages.github.com
 [Heroku]: https://www.heroku.com
 [ICE]: https://webrtcglossary.com/ice
-[Medea]: https://github.com/instrumentisto/medea
 [Jason]: https://github.com/instrumentisto/medea/tree/master/jason
-[GitHub Pages]: https://pages.github.com/
-[JSDoc]: https://jsdoc.app/
-[Heroku]: https://www.heroku.com
+[Medea]: https://github.com/instrumentisto/medea
+[Prettier]: https://prettier.io
+[TypeDoc]: https://typedoc.org

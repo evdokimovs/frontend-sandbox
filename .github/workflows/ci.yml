@@ -4,7 +4,7 @@ on: push
 
 jobs:
   fmt:
-    name: Formatting
+    name: Prettier
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -16,7 +16,6 @@ jobs:
           cmd: fmt:check
 
   lint:
-    name: Lint
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -28,7 +27,6 @@ jobs:
           cmd: lint
 
   test:
-    name: Tests
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
